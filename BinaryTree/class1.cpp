@@ -85,6 +85,76 @@ void levelOrderTraversal(Node* root){
     }
 }
 
+void leftView(Node*root, vector<int> &ans, int level = 0){
+    if(!root) return;
+
+    if(ans.size()==level){
+        ans.push_back(root->data);
+    }
+    leftView(root->left, ans, level);
+    leftView(root->right, ans, level);
+}
+
+void rightView(Node*root, vector<int>&ans, int level=0){
+    if(!root)return;
+    if(ans.size()==level){
+        ans.push_back(root->data);
+
+    }
+    rightView(root->right,ans,level);
+    rightView(root->left,ans,level);
+}
+
+#include<map>
+#include<queue>
+
+void topView(Node*root, vector<int>&ans){
+    map<int, int>hdToNodemap; // map<horizontal distance -> node->data>
+    queue<pair<Node*, int>> q;
+    q.push({root, 0});
+
+    while(!q.empty()){
+        pair<Node*, int> frontNode = q.front();
+        q.pop();
+
+        Node* tempNode = frontNode.first;
+        int hd = frontNode.second;
+
+        if(hdToNodemap.find(hd) == hdToNodemap.end()){
+            ans.push_back(tempNode->data);
+        }
+        if(tempNode->left){
+            q.push({tempNode->left, hd-1});
+        }
+        if(tempNode->right){
+            q.push({tempNode->right, hd+1});
+        }
+    }
+}
+void bottomView(Node*root, vector<int>&ans){
+    map<int, int>hdToNodemap; // map<horizontal distance -> node->data>
+    queue<pair<Node*, int>> q;
+    q.push({root, 0});
+
+    while(!q.empty()){
+        pair<Node*, int> frontNode = q.front();
+        q.pop();
+
+        Node* tempNode = frontNode.first;
+        int hd = frontNode.second;
+
+        
+        ans.push_back(tempNode->data);
+        
+        if(tempNode->left){
+            q.push({tempNode->left, hd-1});
+        }
+        if(tempNode->right){
+            q.push({tempNode->right, hd+1});
+        }
+    }
+}
+
 int main(){
     Node* root = createTree();
     cout<<"printing pre"<<endl;
