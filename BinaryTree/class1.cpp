@@ -155,6 +155,8 @@ void bottomView(Node*root, vector<int>&ans){
     }
 }
 
+// Important traversals are-> preorder, inorder, postorder and levelorder
+
 int main(){
     Node* root = createTree();
     cout<<"printing pre"<<endl;
